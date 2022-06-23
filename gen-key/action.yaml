@@ -9,7 +9,7 @@ inputs:
       email used for creating the key
     required: true
 
-  signing-key-path:
+  key-path:
     description: |
       The path to put the signing key at.
     default: ${{ github.workspace }}/id_rsa
@@ -21,24 +21,24 @@ inputs:
     default: "true"
     required: false
   
-  output-name:
+outputs:
+  pub-key:
     description: |
-      Output name to be used in other steps.
-    default: ssh_pub_key
-    required: false
+      public key of the generated key
+    value: ${{ steps.gen-key.outputs.pub-key }}
 
 runs:
   using: "composite"
   steps:
-    - name: Generate ssh key pair
+    - name: Generate SSH key pair
+      id: gen-key
       shell: bash
       run: |
-        ssh-keygen -t rsa -b 4096 -C "${{ inputs.email }}" -f ${{ inputs.signing-key-path }} -q -N ""
-        cat "${{ inputs.signing-key-path }}.pub"
-        echo "::set-output name=${{ inputs.output-name }}::$(cat ${{ inputs.signing-key-path }}.pub)"
+        ssh-keygen -t rsa -b 4096 -C "${{ inputs.email }}" -f ${{ inputs.key-path }} -q -N ""
+        echo "::set-output name=pub_key::$(cat ${{ inputs.key-path }}.pub)"
 
     # - name: 'Install public key in system keyring'
     #   shell: bash
     #   run: |
-    #     sudo cp ${{ inputs.signing-key-path }}.pub /etc/apk/keys/
+    #     sudo cp ${{ inputs.key-path }}.pub /etc/apk/keys/
     #   if: ${{ inputs.install-public-key }}
