@@ -21,10 +21,9 @@ runs:
     - name: Install crane
       shell: bash
       run: |
-        echo ${{ inputs.update-path }}
         go install github.com/google/go-containerregistry/cmd/crane@${{ inputs.ref }}
     - name: Update $PATH
       shell: bash
       run: |
         echo "::add-path::$(go env GOPATH)/bin"
-      if: ${{ inputs.update-path == 'true' }}
+      if: ${{ inputs.add-path == 'true' }}
