@@ -41,3 +41,4 @@ jobs:
       - uses: tuananh/actions/kaniko-build@main
         with:
           dockerfile: ./kaniko-build/Dockerfile
+          no-push: true
