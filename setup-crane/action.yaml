@@ -1,0 +1,20 @@
+# Copyright 2022 Tuan Anh Tran <me@tuananh.org>
+
+name: 'Setup crane'
+description: |
+  This action sets up crane - https://github.com/google/go-containerregistry/blob/main/cmd/crane/README.md
+
+inputs:
+  ref:
+    description: The GitHub ref to install. Defaults to latest.
+    required: false
+    default: "latest"
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: Install crane
+      shell: bash
+      run: 
+        go install github.com/google/go-containerregistry/cmd/crane@${{ inputs.ref }}
