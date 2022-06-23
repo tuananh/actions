@@ -84,13 +84,13 @@ runs:
       set -o errexit
       export IFS=''
       
-      [ -n "${{ inputs.context }}" ] && kargs +="--context ${{ inputs.context }} "
-      [ -n "${{ inputs.dockerfile }}" ] && kargs +="--dockerfile ${{ inputs.dockerfile }} "
-      [ -n "${{ inputs.destination }}" ] && kargs +="--destination ${{ inputs.destination }} "
-      [ -n "${{ inputs.cache }}" ] && kargs +="--cache "
-      [ -n "${{ inputs.cleanup }}" ] && kargs +="--cleanup "
-      [ -n "${{ inputs.no-push }}" ] && kargs +="--no-push "
-      [ -n "${{ inputs.reproducible }}" ] && kargs +="--reproducible "
+      [ -n "${{ inputs.context }}" ] && kargs="$kargs --context ${{ inputs.context }} "
+      [ -n "${{ inputs.dockerfile }}" ] && kargs="$kargs --dockerfile ${{ inputs.dockerfile }} "
+      [ -n "${{ inputs.destination }}" ] && kargs="$kargs --destination ${{ inputs.destination }} "
+      [ -n "${{ inputs.cache }}" ] && kargs="$kargs --cache "
+      [ -n "${{ inputs.cleanup }}" ] && kargs="$kargs --cleanup "
+      [ -n "${{ inputs.no-push }}" ] && kargs="$kargs --no-push "
+      [ -n "${{ inputs.reproducible }}" ] && kargs="$kargs --reproducible "
 
       echo $kargs
 
