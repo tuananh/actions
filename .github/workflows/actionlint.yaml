@@ -1,0 +1,22 @@
+name: Action Lint
+
+on:
+  pull_request:
+    branches: [ 'main', 'release-*' ]
+
+jobs:
+
+  action-lint:
+    name: Action lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - id: get_yamls
+        run: |
+          yamls=$(find . -name "*.yaml")
+          echo "::set-output name=files::${yamls}"
+      - uses: reviewdog/action-actionlint@v1
+        with:
+          actionlint_flags: ${{ steps.get_yamls.outputs.files }}
