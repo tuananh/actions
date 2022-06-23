@@ -82,7 +82,6 @@ runs:
     - "-c"
     - |
       set -o errexit
-      export IFS=''
       
       [ -n "${{ inputs.context }}" ] && kargs="$kargs --context ${{ inputs.context }} "
       [ -n "${{ inputs.dockerfile }}" ] && kargs="$kargs --dockerfile ${{ inputs.dockerfile }} "
@@ -94,6 +93,6 @@ runs:
 
       echo $kargs
 
-      /kaniko/executor "$kargs"
+      /kaniko/executor $kargs
       
       echo EXIT CODE: $?
