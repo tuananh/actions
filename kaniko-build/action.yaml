@@ -84,17 +84,17 @@ runs:
       set -o errexit
       export IFS=''
       
-      export args = ''
-      [ -n "${{ inputs.context }}" ] && args +="--context ${{ inputs.context }} "
-      [ -n "${{ inputs.dockerfile }}" ] && args +="--dockerfile ${{ inputs.dockerfile }} "
-      [ -n "${{ inputs.destination }}" ] && args +="--destination ${{ inputs.destination }} "
-      [ -n "${{ inputs.cache }}" ] && args +="--cache "
-      [ -n "${{ inputs.cleanup }}" ] && args +="--cleanup "
-      [ -n "${{ inputs.no-push }}" ] && args +="--no-push "
-      [ -n "${{ inputs.reproducible }}" ] && args +="--reproducible "
+      export kargs = ''
+      [ -n "${{ inputs.context }}" ] && kargs +="--context ${{ inputs.context }} "
+      [ -n "${{ inputs.dockerfile }}" ] && kargs +="--dockerfile ${{ inputs.dockerfile }} "
+      [ -n "${{ inputs.destination }}" ] && kargs +="--destination ${{ inputs.destination }} "
+      [ -n "${{ inputs.cache }}" ] && kargs +="--cache "
+      [ -n "${{ inputs.cleanup }}" ] && kargs +="--cleanup "
+      [ -n "${{ inputs.no-push }}" ] && kargs +="--no-push "
+      [ -n "${{ inputs.reproducible }}" ] && kargs +="--reproducible "
 
-      echo $args
+      echo $kargs
 
-      /kaniko/executor $args
+      /kaniko/executor $kargs
       
       echo EXIT CODE: $?
