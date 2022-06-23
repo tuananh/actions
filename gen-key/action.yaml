@@ -35,7 +35,7 @@ runs:
       shell: bash
       run: |
         ssh-keygen -t rsa -b 4096 -C "${{ inputs.email }}" -f ${{ inputs.key-path }} -q -N ""
-        echo "::set-output name=pub_key::$(cat ${{ inputs.key-path }}.pub)"
+        echo "::set-output name=pub-key::$(cat ${{ inputs.key-path }}.pub)"
 
     # - name: 'Install public key in system keyring'
     #   shell: bash
