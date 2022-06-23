@@ -84,7 +84,6 @@ runs:
       set -o errexit
       export IFS=''
       
-      export kargs = ''
       [ -n "${{ inputs.context }}" ] && kargs +="--context ${{ inputs.context }} "
       [ -n "${{ inputs.dockerfile }}" ] && kargs +="--dockerfile ${{ inputs.dockerfile }} "
       [ -n "${{ inputs.destination }}" ] && kargs +="--destination ${{ inputs.destination }} "
