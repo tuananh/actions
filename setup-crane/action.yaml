@@ -1,6 +1,6 @@
 # Copyright 2022 Tuan Anh Tran <me@tuananh.org>
 
-name: 'Setup crane'
+name: Setup crane
 description: |
   This action sets up crane - https://github.com/google/go-containerregistry/blob/main/cmd/crane/README.md
 
@@ -16,5 +16,4 @@ runs:
   steps:
     - name: Install crane
       shell: bash
-      run: 
-        go install github.com/google/go-containerregistry/cmd/crane@${{ inputs.ref }}
+      run: go install github.com/google/go-containerregistry/cmd/crane@${{ inputs.ref }}
