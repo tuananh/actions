@@ -1,7 +1,7 @@
 tuananh/actions
 ---------------
 
-My commonly used GitHub Actions.
+A collection of my commonly used Github Actions.
 
 - `gen-key`: generate SSH key.
 - `setup-crane`: install `crane` CLI.
