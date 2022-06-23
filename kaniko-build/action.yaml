@@ -94,6 +94,6 @@ runs:
 
       echo $kargs
 
-      /kaniko/executor --help
+      /kaniko/executor "$kargs"
       
       echo EXIT CODE: $?
