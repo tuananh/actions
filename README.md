@@ -3,6 +3,9 @@ tuananh/actions
 
 My commonly used GitHub Actions.
 
+- `gen-key`: generate SSH key.
+- `setup-crane`: install `crane` CLI.
+
 ## Usage
 
 See each action's README or checkout the [test repo](https://github.com/tuananh/actions-test) for example usage.
