@@ -25,5 +25,5 @@ runs:
     - name: Update $PATH
       shell: bash
       run: |
-        echo "::add-path::$(go env GOPATH)/bin"
+        echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
       if: ${{ inputs.add-path == 'true' }}
