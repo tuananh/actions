@@ -9,7 +9,7 @@ inputs:
     description: The GitHub ref to install. Defaults to latest.
     required: false
     default: "latest"
-  update-path:
+  add-path:
     description: Add GOPATH/bin to PATH variable
     required: false
     default: "true"
@@ -25,5 +25,6 @@ runs:
         go install github.com/google/go-containerregistry/cmd/crane@${{ inputs.ref }}
     - name: Update $PATH
       shell: bash
-      run: export PATH=${PATH}:`go env GOPATH`/bin
+      run: |
+        echo "::add-path::$(go env GOPATH)/bin"
       if: ${{ inputs.update-path == 'true' }}
