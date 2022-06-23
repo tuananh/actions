@@ -7,22 +7,25 @@ inputs:
   email:
     description: |
       email used for creating the key
-    require: true
+    required: true
 
   signing-key-path:
     description: |
       The path to put the signing key at.
     default: ${{ github.workspace }}/id_rsa
+    required: false
 
   install-public-key:
     description: |
       Whether to add the generated key to the system APK keyring.
-    default: true
+    default: "true"
+    required: false
   
-  output:
+  output-name:
     description: |
       Output name to be used in other steps.
     default: ssh_pub_key
+    required: false
 
 runs:
   using: "composite"
@@ -31,7 +34,7 @@ runs:
       shell: bash
       run: |
         ssh-keygen -t rsa -b 4096 -C "${{ inputs.email }}" -f ${{ inputs.signing-key-path }} -q -N ""
-        echo "::set-output name=ssh_pub_key::$(cat ${{ inputs.signing-key-path }}.pub)"
+        echo "::set-output name=${{ inputs.output-name }}::$(cat ${{ inputs.signing-key-path }}.pub)"
 
     # - name: 'Install public key in system keyring'
     #   shell: bash
