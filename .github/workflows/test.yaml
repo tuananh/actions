@@ -31,3 +31,11 @@ jobs:
       - name: test crane
         run: |
           crane version
+  
+  kaniko-build:
+    name: kaniko-build test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: tuananh/actions/kaniko-build@main

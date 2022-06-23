@@ -5,6 +5,7 @@ A collection of my commonly used Github Actions.
 
 - `gen-key`: generate SSH key.
 - `setup-crane`: install `crane` CLI.
+- `kaniko-build`: build OCI image with `kaniko`.
 
 ## Usage
 

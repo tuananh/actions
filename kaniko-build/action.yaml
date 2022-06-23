@@ -1,0 +1,98 @@
+# Copyright 2022 Tuan Anh Tran <me@tuananh.org>
+
+name: Build image with kaniko
+description: |
+  This action build an OCI image with kaniko
+
+inputs:
+  image:
+    description: image to be used. Default to gcr.io/kaniko-project/executor
+    default: gcr.io/kaniko-project/executor:latest
+    required: false
+  
+  destination:
+    description: destination flag
+    required: false
+
+  build-args:
+    description: build args
+    required: false
+
+  cache:
+    description: cache flag
+    required: false
+
+  cache-dir:
+    description: cache-dir flag
+    required: false
+  
+  cache-repo:
+    description: cache-repo flag
+    required: false
+
+  cache-copy-layers:
+    description: cache-copy-layers flag
+    required: false
+
+  cache-ttl:
+    description: cache-ttl flag
+    required: false
+
+  cleanup:
+    description: cleanup flag
+    required: false
+
+  context:
+    description: context flag
+    default: dir://${{ github.workspace }}
+    required: false
+
+  context-sub-path:
+    description: context-sub-path flag
+    required: false
+
+  dockerfile:
+    description: dockerfile flag
+    default: Dockerfile
+    required: false
+
+  reproducible:
+    description: reproducible flag
+    required: false
+
+  no-push:
+    description: no-push flag
+    required: false
+
+# outputs:
+#   digest:
+#     description: |
+#       The digest of the published container image.
+
+runs:
+  using: docker
+  image: "docker://${{ inputs.image }}"
+  # env:
+  #   GITHUB_ACTOR: ${{ inputs.repository_owner }}
+  #   GITHUB_TOKEN: ${{ inputs.token }}
+  entrypoint: /bin/sh
+  args:
+    - "-c"
+    - |
+      set -o errexit
+      export IFS=''
+      
+      args = ''
+      [ -n "${{ inputs.context }}" ] && args +="--context ${{ inputs.context }} "
+      [ -n "${{ inputs.dockerfile }}" ] && args +="--dockerfile ${{ inputs.dockerfile }} "
+      [ -n "${{ inputs.destination }}" ] && args +="--destination ${{ inputs.destination }} "
+      [ -n "${{ inputs.cache }}" ] && args +="--cache "
+      [ -n "${{ inputs.cleanup }}" ] && args +="--cleanup "
+      [ -n "${{ inputs.no-push }}" ] && args +="--no-push "
+      [ -n "${{ inputs.reproducible }}" ] && args +="--reproducible "
+
+      echo $args
+
+      /kaniko/executor $args
+      
+      echo EXIT CODE: $?
