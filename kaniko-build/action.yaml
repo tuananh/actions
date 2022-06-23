@@ -71,7 +71,9 @@ inputs:
 
 runs:
   using: docker
-  image: "docker://${{ inputs.image }}"
+  # TODO: (tuananh) figure out how to use image from inputs
+  # image: "docker://${{ inputs.image }}"
+  image: "docker://gcr.io/kaniko-project/executor:latest"
   # env:
   #   GITHUB_ACTOR: ${{ inputs.repository_owner }}
   #   GITHUB_TOKEN: ${{ inputs.token }}
