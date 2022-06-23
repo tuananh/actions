@@ -1,0 +1,33 @@
+name: Action Test
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+
+  gen-key:
+    name: gen-key test
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: gen_key
+        uses: tuananh/actions/gen-key@main
+        with:
+          email: ci@tuananh.org
+      - name: print pub key
+        run: |
+          echo ${{ steps.gen_key.outputs.pub-key }}
+  
+  setup-crane:
+    name: setup-crane test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: tuananh/actions/setup-crane@main
+        with:
+          ref: main
+      - name: test crane
+        run: |
+          crane version
