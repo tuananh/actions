@@ -9,6 +9,10 @@ inputs:
     description: The GitHub ref to install. Defaults to latest.
     required: false
     default: "latest"
+  update-path:
+    description: Add GOPATH/bin to PATH variable
+    required: false
+    default: "true"
 
 runs:
   using: "composite"
@@ -16,4 +20,9 @@ runs:
   steps:
     - name: Install crane
       shell: bash
-      run: go install github.com/google/go-containerregistry/cmd/crane@${{ inputs.ref }}
+      run: |
+        go install github.com/google/go-containerregistry/cmd/crane@${{ inputs.ref }}
+    - name: Update $PATH
+      shell: bash
+      run: export PATH=${PATH}:`go env GOPATH`/bin
+      if: ${{ github.event.inputs.update-path == 'true' }}
