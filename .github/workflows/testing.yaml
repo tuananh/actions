@@ -11,10 +11,6 @@ jobs:
     name: gen-key test
     runs-on: ubuntu-latest
 
-    # we need this for testing kaniko-build (uploading go ghcr.io)
-    permissions:
-      packages: write
-
     steps:
       - id: gen_key
         uses: tuananh/actions/gen-key@main
@@ -39,6 +35,10 @@ jobs:
   kaniko-build:
     name: kaniko-build test
     runs-on: ubuntu-latest
+
+    # we need this for testing kaniko-build (uploading go ghcr.io)
+    permissions:
+      packages: write
 
     steps:
       - uses: actions/checkout@v3
