@@ -1,0 +1,44 @@
+# Copyright 2022 Tuan Anh Tran <me@tuananh.org>
+
+name: gen-key
+description: |
+  This action generate SSH key.
+inputs:
+  email:
+    description: |
+      email used for creating the key
+    required: true
+
+  key-path:
+    description: |
+      The path to put the signing key at.
+    default: ${{ github.workspace }}/id_rsa
+    required: false
+
+  install-public-key:
+    description: |
+      Whether to add the generated key to the system APK keyring.
+    default: "true"
+    required: false
+  
+outputs:
+  pub-key:
+    description: |
+      public key of the generated key
+    value: ${{ steps.gen-key.outputs.pub-key }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Generate SSH key pair
+      id: gen-key
+      shell: bash
+      run: |
+        ssh-keygen -t rsa -b 4096 -C "${{ inputs.email }}" -f ${{ inputs.key-path }} -q -N ""
+        echo "::set-output name=pub-key::$(cat ${{ inputs.key-path }}.pub)"
+
+    # - name: 'Install public key in system keyring'
+    #   shell: bash
+    #   run: |
+    #     sudo cp ${{ inputs.key-path }}.pub /etc/apk/keys/
+    #   if: ${{ inputs.install-public-key }}

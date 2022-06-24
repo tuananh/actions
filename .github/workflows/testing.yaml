@@ -1,0 +1,53 @@
+name: Testing
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+
+  gen-key:
+    name: gen-key test
+    runs-on: ubuntu-latest
+
+    # we need this for testing kaniko-build (uploading go ghcr.io)
+    permissions:
+      packages: write
+
+    steps:
+      - id: gen_key
+        uses: tuananh/actions/gen-key@main
+        with:
+          email: ci@tuananh.org
+      - name: print pub key
+        run: |
+          echo ${{ steps.gen_key.outputs.pub-key }}
+  
+  setup-crane:
+    name: setup-crane test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: tuananh/actions/setup-crane@main
+        with:
+          ref: main
+      - name: test crane
+        run: |
+          crane version
+  
+  kaniko-build:
+    name: kaniko-build test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: tuananh/actions/kaniko-build@main
+        with:
+          dockerfile: ./kaniko-build/test.Dockerfile
+          registry-url: ghcr.io
+          registry-username: ${{ github.owner }}
+          registry-password: ${{ secrets.GITHUB_TOKEN }}
+          reproducible: true
+          destination: ghcr.io/tuananh/kaniko-build-test:latest
+          # no-push: true
