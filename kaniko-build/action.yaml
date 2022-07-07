@@ -121,8 +121,6 @@ runs:
       download_crane
 
       echo ${{ inputs.registry-password }} | ./crane auth login ${{ inputs.registry-url }} --username ${{ inputs.username }} --password-stdin
-
-      cat /kaniko/.docker/config.json
       
       [ -n "${{ inputs.context }}" ] && kargs="$kargs --context ${{ inputs.context }} "
       [ -n "${{ inputs.dockerfile }}" ] && kargs="$kargs --dockerfile ${{ inputs.dockerfile }} "

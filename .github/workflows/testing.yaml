@@ -39,6 +39,7 @@ jobs:
     # we need this for testing kaniko-build (uploading go ghcr.io)
     permissions:
       packages: write
+      contents: write
 
     steps:
       - uses: actions/checkout@v3
