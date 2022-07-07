@@ -124,7 +124,7 @@ runs:
 
       download_crane
 
-      echo {\"auths\":{\"$REGISTRY_URL\":{\"auth\":\"$(echo -n ${REGISTRY_USER}:${REGISTRY_PASSWORD} | base64)\"}}} > /kaniko/.docker/config.json
+      echo {"auths":{"$REGISTRY_URL":{"auth":"$(echo -n ${REGISTRY_USER}:${REGISTRY_PASSWORD} | base64)"}}} > /kaniko/.docker/config.json
 
       cat /kaniko/.docker/config.json
       
