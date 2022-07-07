@@ -46,7 +46,7 @@ jobs:
       - uses: tuananh/actions/kaniko-build@main
         with:
           dockerfile: ./kaniko-build/test.Dockerfile
-          registry-url: ghcr.io/v1/
+          registry-url: https://ghcr.io/v1/
           registry-username: ${{ github.owner }}
           registry-password: ${{ github.token }}
           reproducible: true
