@@ -88,6 +88,10 @@ runs:
   # image: "docker://${{ inputs.image }}"
   image: "docker://gcr.io/kaniko-project/executor:debug"
   entrypoint: /bin/sh
+  env:
+    REGISTRY_PASSWORD: ${{ inputs.registry-password }}
+    REGISTRY_USER: ${{ inputs.registry-user }}
+    REGISTRY_URL: ${{ inputs.registry-url }}
   args:
     - "-c"
     - |
@@ -120,7 +124,9 @@ runs:
 
       download_crane
 
-      echo ${{ inputs.registry-password }} | ./crane auth login ${{ inputs.registry-url }} --username ${{ inputs.username }} --password-stdin
+      echo "{\"auths\":{\"$REGISTRY_URL\":{\"auth\":\"$(echo -n ${REGISTRY_USER}:${REGISTRY_PASSWORD} | base64)\"}}}" > /kaniko/.docker/config.json
+
+      cat /kaniko/.docker/config.json
       
       [ -n "${{ inputs.context }}" ] && kargs="$kargs --context ${{ inputs.context }} "
       [ -n "${{ inputs.dockerfile }}" ] && kargs="$kargs --dockerfile ${{ inputs.dockerfile }} "

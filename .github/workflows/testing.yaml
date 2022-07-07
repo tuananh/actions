@@ -39,14 +39,14 @@ jobs:
     # we need this for testing kaniko-build (uploading go ghcr.io)
     permissions:
       packages: write
-      contents: write
+      contents: read
 
     steps:
       - uses: actions/checkout@v3
       - uses: tuananh/actions/kaniko-build@main
         with:
           dockerfile: ./kaniko-build/test.Dockerfile
-          registry-url: ghcr.io
+          registry-url: ghcr.io/v1/
           registry-username: ${{ github.owner }}
           registry-password: ${{ secrets.GITHUB_TOKEN }}
           reproducible: true
