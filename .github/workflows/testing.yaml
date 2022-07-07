@@ -42,6 +42,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.owner }}
+          password: ${{ github.token }}
       - uses: tuananh/actions/kaniko-build@main
         with:
           dockerfile: ./kaniko-build/test.Dockerfile
