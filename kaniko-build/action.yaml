@@ -59,6 +59,12 @@ inputs:
   reproducible:
     description: reproducible flag
     required: false
+    default: "true"
+
+  force:
+    description: force flag
+    required: false
+    default: "true"
 
   no-push:
     description: no-push flag
@@ -133,6 +139,7 @@ runs:
       [ -n "${{ inputs.cleanup }}" ] && kargs="$kargs --cleanup "
       [ -n "${{ inputs.no-push }}" ] && kargs="$kargs --no-push "
       [ -n "${{ inputs.reproducible }}" ] && kargs="$kargs --reproducible "
+      [ -n "${{ inputs.force }}" ] && kargs="$kargs --force "
 
       echo KANIKO FLAGS: $kargs
 
