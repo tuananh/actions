@@ -48,7 +48,7 @@ jobs:
           dockerfile: ./kaniko-build/test.Dockerfile
           registry-url: ghcr.io/v1/
           registry-username: ${{ github.owner }}
-          registry-password: ${{ secrets.GITHUB_TOKEN }}
+          registry-password: ${{ github.token }}
           reproducible: true
           destination: ghcr.io/tuananh/kaniko-build-test:${GITHUB_SHA::7}
           # no-push: true
