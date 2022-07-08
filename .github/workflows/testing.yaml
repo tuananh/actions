@@ -33,13 +33,11 @@ jobs:
           crane version
 
   setup-tflint:
-    name: setup-tflin test
+    name: setup-tflint test
     runs-on: ubuntu-latest
 
     steps:
       - uses: tuananh/actions/setup-tflint@main
-        with:
-          ref: main
       - name: test tflint
         run: |
           tflint --version

@@ -36,9 +36,12 @@ runs:
             exit -1
             ;;
           esac
-          TFLINT_URL=${TFLINT_BASE_URL}/${TFLINT_VERSION}/go-containerregistry_${OS}_${ARCH}.tar.gz
+          TFLINT_URL=${TFLINT_BASE_URL}/${TFLINT_VERSION}/tflint_${OS}_${ARCH}.zip
           echo $TFLINT_URL
-          wget --no-check-certificate --quiet -O - $TFLINT_URL | tar xzf -
+          wget --no-check-certificate --quiet -O - $TFLINT_URL -O temp.zip
+          unzip temp.zip
+          rm temp.zip
+          ls
           chmod +x tflint
         }
 
