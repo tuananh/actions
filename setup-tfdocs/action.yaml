@@ -1,0 +1,41 @@
+# Copyright 2022 Tuan Anh Tran <me@tuananh.org>
+
+name: Setup terraform docs
+description: |
+  This action sets up terraform docs
+inputs:
+  version:
+    description: terraform docs version
+    required: false
+    default: "v0.16.0"
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: Install tfdocs
+      shell: bash
+      run: |
+        function download_tfdocs() {
+          TFDOCS_VERSION=${{ inputs.version }}
+          TFDOCS_BASE_URL="https://github.com/terraform-docs/terraform-docs/releases/download"
+          https://github.com/terraform-docs/terraform-docs/releases/download/v0.16.0/terraform-docs-v0.16.0-darwin-amd64.tar.gz
+          case "$(echo $RUNNER_OS-$RUNNER_ARCH | awk '{print tolower($0)}')" in
+          linux-x64)    OS_ARCH=linux-amd64;;
+          macos-x64)  OS_ARCH=darwin-amd64;;
+          macos-arm64)  OS_ARCH=darwin-arm64;;
+          windows-x64)  OS_ARCH=windows-amd64;;
+          *)
+            echo Unsupported RUNNER_ARCH \"$RUNNER_ARCH\" & RUNNER_OS \"$RUNNER_OS\"
+            exit -1
+            ;;
+          esac
+
+          TFDOCS_URL=${TFDOCS_BASE_URL}/${TFDOCS_VERSION}/terraform-docs-${TFDOCS_VERSION}-${OS_ARCH}.tar.gz
+          echo $TFDOCS_URL
+          wget --no-check-certificate --quiet -O - $TFDOCS_URL | tar xzf -
+          chmod +x terraform-docs
+        }
+
+        download_tfdocs
+        echo "$(pwd)" >> $GITHUB_PATH

@@ -41,7 +41,16 @@ jobs:
       - name: test tflint
         run: |
           tflint --version
-  
+  setup-tfdocs:
+    name: setup-tfdocs test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: tuananh/actions/setup-tfdocs@main
+      - name: test tfdocs
+        run: |
+          terraform-docs --version
+
   kaniko-build:
     name: kaniko-build test
     runs-on: ubuntu-latest
