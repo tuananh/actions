@@ -1,0 +1,46 @@
+# Copyright 2022 Tuan Anh Tran <me@tuananh.org>
+
+name: Setup tflint
+description: |
+  This action sets up tflint - https://github.com/terraform-linters/tflint
+
+inputs:
+  version:
+    description: tflint version
+    required: false
+    default: "v0.38.1"
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: Install tflint
+      shell: bash
+      run: |
+        function download_tflint() {
+          TFLINT_VERSION=v0.38.1
+          TFLINT_BASE_URL="https://github.com/terraform-linters/tflint/releases/download"
+          case "$(echo $RUNNER_ARCH | awk '{print tolower($0)}')" in
+          x86|x64) ARCH=amd64;;
+          arm64)   ARCH=arm64;;
+          *)
+            echo Unsupported RUNNER_ARCH \"$RUNNER_ARCH\"
+            exit -1
+            ;;
+          esac
+          case "$(echo $RUNNER_OS | awk '{print tolower($0)}')" in
+          "linux") OS=linux;;
+          "macos") OS=darwin;;
+          *)
+            echo Unsupported RUNNER_OS \"$RUNNER_OS\"
+            exit -1
+            ;;
+          esac
+          TFLINT_URL=${TFLINT_BASE_URL}/${TFLINT_VERSION}/go-containerregistry_${OS}_${ARCH}.tar.gz
+          echo $TFLINT_URL
+          wget --no-check-certificate --quiet -O - $TFLINT_URL | tar xzf -
+          chmod +x tflint
+        }
+
+        download_tflint
+        echo "$(pwd)" >> $GITHUB_PATH
