@@ -19,7 +19,6 @@ runs:
         function download_tfdocs() {
           TFDOCS_VERSION=${{ inputs.version }}
           TFDOCS_BASE_URL="https://github.com/terraform-docs/terraform-docs/releases/download"
-          https://github.com/terraform-docs/terraform-docs/releases/download/v0.16.0/terraform-docs-v0.16.0-darwin-amd64.tar.gz
           case "$(echo $RUNNER_OS-$RUNNER_ARCH | awk '{print tolower($0)}')" in
           linux-x64)    OS_ARCH=linux-amd64;;
           macos-x64)  OS_ARCH=darwin-amd64;;
