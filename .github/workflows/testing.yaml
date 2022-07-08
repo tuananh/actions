@@ -50,6 +50,7 @@ jobs:
       - name: test tfdocs
         run: |
           terraform-docs --version
+          ls -lah
 
   kaniko-build:
     name: kaniko-build test
