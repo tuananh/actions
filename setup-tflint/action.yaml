@@ -20,23 +20,20 @@ runs:
         function download_tflint() {
           TFLINT_VERSION=v0.38.1
           TFLINT_BASE_URL="https://github.com/terraform-linters/tflint/releases/download"
-          case "$(echo $RUNNER_ARCH | awk '{print tolower($0)}')" in
-          x86|x64) ARCH=amd64;;
-          arm64)   ARCH=arm64;;
+          case "$(echo $RUNNER_OS-$RUNNER_ARCH | awk '{print tolower($0)}')" in
+          linux-x86)    OS_ARCH=linux_386;;
+          linux-x64)    OS_ARCH=linux_amd64;;
+          macos-x64)  OS_ARCH=darwin_amd64;;
+          macos-arm64)  OS_ARCH=darwin_arm64;;
+          windows-x86)  OS_ARCH=windows_386;;
+          windows-x64)  OS_ARCH=windows_amd64;;
           *)
-            echo Unsupported RUNNER_ARCH \"$RUNNER_ARCH\"
+            echo Unsupported RUNNER_ARCH \"$RUNNER_ARCH\" & RUNNER_OS \"$RUNNER_OS\"
             exit -1
             ;;
           esac
-          case "$(echo $RUNNER_OS | awk '{print tolower($0)}')" in
-          "linux") OS=linux;;
-          "macos") OS=darwin;;
-          *)
-            echo Unsupported RUNNER_OS \"$RUNNER_OS\"
-            exit -1
-            ;;
-          esac
-          TFLINT_URL=${TFLINT_BASE_URL}/${TFLINT_VERSION}/tflint_${OS}_${ARCH}.zip
+
+          TFLINT_URL=${TFLINT_BASE_URL}/${TFLINT_VERSION}/tflint_${OS_ARCH}.zip
           echo $TFLINT_URL
           wget --no-check-certificate --quiet -O - $TFLINT_URL -O temp.zip
           unzip temp.zip
