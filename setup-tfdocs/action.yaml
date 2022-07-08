@@ -32,8 +32,7 @@ runs:
 
           TFDOCS_URL=${TFDOCS_BASE_URL}/${TFDOCS_VERSION}/terraform-docs-${TFDOCS_VERSION}-${OS_ARCH}.tar.gz
           echo $TFDOCS_URL
-          wget --no-check-certificate --quiet -O - $TFDOCS_URL | tar xzf /tmp
-          mv /tmp/terraform-docs .
+          wget --no-check-certificate --quiet -O - $TFDOCS_URL | tar xzf - terraform-docs
           chmod +x terraform-docs
         }
 
