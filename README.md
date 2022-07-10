@@ -11,7 +11,7 @@ A collection of my commonly used Github Actions.
 
 ## Usage
 
-See each action's README or checkout the [test repo](https://github.com/tuananh/actions-test) for example usage.
+See each action's README or checkout the [testing workflow](.github/workflows/testing.yaml) for example usage.
 
 ## License
 

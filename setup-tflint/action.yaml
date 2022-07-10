@@ -34,7 +34,7 @@ runs:
           esac
 
           TFLINT_URL=${TFLINT_BASE_URL}/${TFLINT_VERSION}/tflint_${OS_ARCH}.zip
-          echo $TFLINT_URL
+          echo "Downloading tflint using $TFLINT_URL ..."
           wget --no-check-certificate --quiet -O - $TFLINT_URL -O temp.zip
           unzip temp.zip
           rm temp.zip
