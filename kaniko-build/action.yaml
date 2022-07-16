@@ -92,7 +92,7 @@ runs:
   using: docker
   # TODO: (tuananh) figure out how to use image from inputs
   # image: "docker://${{ inputs.image }}"
-  image: "docker://gcr.io/kaniko-project/executor:v1.5.2-debug"
+  image: "docker://gcr.io/kaniko-project/executor:v1.8.1-debug"
   entrypoint: /busybox/sh
   env:
     REGISTRY_PASSWORD: ${{ inputs.registry-password }}
