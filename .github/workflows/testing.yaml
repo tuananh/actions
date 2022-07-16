@@ -81,7 +81,7 @@ jobs:
       - uses: tuananh/actions/kaniko-build@main
         with:
           dockerfile: ./kaniko-build/test.Dockerfile
-          registry-url: index.docker.io
+          registry-url: docker.io
           registry-username: tuananhorg
           registry-password: ${{ secrets.DOCKERHUB_TOKEN }}
           reproducible: true
