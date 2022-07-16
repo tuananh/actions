@@ -51,8 +51,8 @@ jobs:
         run: |
           terraform-docs --version
 
-  kaniko-build:
-    name: kaniko-build test
+  kaniko-build-ghcr:
+    name: kaniko-build test with GHCR
     runs-on: ubuntu-latest
 
     # we need these permissions for testing kaniko-build (uploading to ghcr.io)
@@ -70,4 +70,20 @@ jobs:
           registry-password: ${{ secrets.GITHUB_TOKEN }}
           reproducible: true
           destination: ghcr.io/tuananh/kaniko-build-test:${GITHUB_SHA::7}
+          # no-push: true
+
+  kaniko-build-dockerhub:
+    name: kaniko-build test with DockerHub
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: tuananh/actions/kaniko-build@main
+        with:
+          dockerfile: ./kaniko-build/test.Dockerfile
+          registry-url: index.docker.io
+          registry-username: tuananhorg
+          registry-password: ${{ secrets.DOCKERHUB_TOKEN }}
+          reproducible: true
+          destination: tuananh/kaniko-build-test:${GITHUB_SHA::7}
           # no-push: true
