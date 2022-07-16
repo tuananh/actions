@@ -85,5 +85,5 @@ jobs:
           registry-username: tuananhorg
           registry-password: ${{ secrets.DOCKERHUB_TOKEN }}
           reproducible: true
-          destination: tuananh/kaniko-build-test:${GITHUB_SHA::7}
+          destination: tuananhorg/kaniko-build-test:${GITHUB_SHA::7}
           # no-push: true
