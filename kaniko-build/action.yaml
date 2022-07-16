@@ -134,8 +134,7 @@ runs:
       
       sed -i 's/index.docker.io\/v1/index.docker.io\/v2/g' /kaniko/.docker/config.json
 
-      cat /kaniko/.docker/config.json
-      ./crane ls docker.io/tuanahorg/java_example
+      ./crane ls docker.io/tuananhorg/java_example
 
       [ -n "${{ inputs.context }}" ] && kargs="$kargs --context ${{ inputs.context }} "
       [ -n "${{ inputs.dockerfile }}" ] && kargs="$kargs --dockerfile ${{ inputs.dockerfile }} "
