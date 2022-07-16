@@ -132,6 +132,7 @@ runs:
 
       echo ${{ inputs.registry-password }} | ./crane auth login ${{ inputs.registry-url }} --username ${{ inputs.username }} --password-stdin
       
+      cat /kaniko/.docker/config.json
       ./crane ls docker.io/tuanahorg/java_example
 
       [ -n "${{ inputs.context }}" ] && kargs="$kargs --context ${{ inputs.context }} "
