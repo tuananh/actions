@@ -132,6 +132,8 @@ runs:
 
       echo ${{ inputs.registry-password }} | ./crane auth login ${{ inputs.registry-url }} --username ${{ inputs.username }} --password-stdin
       
+      sed -i 's/index.docker.io\/v1/index.docker.io\/v2/g' /kaniko/.docker/config.json
+
       cat /kaniko/.docker/config.json
       ./crane ls docker.io/tuanahorg/java_example
 
