@@ -50,13 +50,12 @@ jobs:
       - name: test tfdocs
         run: |
           terraform-docs --version
-          ls -lah
 
   kaniko-build:
     name: kaniko-build test
     runs-on: ubuntu-latest
 
-    # we need this for testing kaniko-build (uploading go ghcr.io)
+    # we need these permissions for testing kaniko-build (uploading to ghcr.io)
     permissions:
       packages: write
       contents: read
@@ -68,7 +67,7 @@ jobs:
           dockerfile: ./kaniko-build/test.Dockerfile
           registry-url: ghcr.io
           registry-username: ${{ github.owner }}
-          registry-password: ${{ github.token }}
+          registry-password: ${{ secrets.GITHUB_TOKEN }}
           reproducible: true
           destination: ghcr.io/tuananh/kaniko-build-test:${GITHUB_SHA::7}
           # no-push: true
