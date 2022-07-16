@@ -123,7 +123,7 @@ runs:
           ;;
         esac
         CRANE_URL=${CRANE_BASE_URL}/${CRANE_VERSION}/go-containerregistry_${OS}_${ARCH}.tar.gz
-        echo $CRANE_URL
+        echo "Downloading crane using URL: $CRANE_URL"
         wget --no-check-certificate --quiet -O - $CRANE_URL | tar xzf -
         chmod +x crane
       }
