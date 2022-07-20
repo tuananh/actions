@@ -71,3 +71,4 @@ jobs:
           reproducible: true
           destination: ghcr.io/tuananh/kaniko-build-test:${GITHUB_SHA::7}
           no-push: true
+          tar-path: ./

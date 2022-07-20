@@ -70,6 +70,10 @@ inputs:
     description: no-push flag
     required: false
 
+  tar-path:
+    description: tarPath flag
+    required: false
+
   # required if you want to push to registry
   registry-url:
     description: registry url
@@ -137,6 +141,7 @@ runs:
       [ -n "${{ inputs.cache }}" ] && kargs="$kargs --cache "
       [ -n "${{ inputs.cleanup }}" ] && kargs="$kargs --cleanup "
       [ -n "${{ inputs.no-push }}" ] && kargs="$kargs --no-push "
+      [ -n "${{ inputs.tar-path }}" ] && kargs="$kargs --tarPath ${{ inputs.tar-path }}"
       [ -n "${{ inputs.reproducible }}" ] && kargs="$kargs --reproducible "
       [ -n "${{ inputs.force }}" ] && kargs="$kargs --force "
 
