@@ -71,19 +71,3 @@ jobs:
           reproducible: true
           destination: ghcr.io/tuananh/kaniko-build-test:${GITHUB_SHA::7}
           # no-push: true
-
-  kaniko-build-dockerhub:
-    name: kaniko-build test with DockerHub
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-      - uses: tuananh/actions/kaniko-build@main
-        with:
-          dockerfile: ./kaniko-build/test.Dockerfile
-          registry-url: docker.io
-          registry-username: tuananhorg
-          registry-password: ${{ secrets.DOCKERHUB_TOKEN }}
-          reproducible: true
-          destination: tuananhorg/kaniko-build-test:${GITHUB_SHA::7}
-          # no-push: true

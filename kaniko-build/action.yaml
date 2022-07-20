@@ -131,14 +131,9 @@ runs:
       download_crane
 
       echo ${{ inputs.registry-password }} | ./crane auth login ${{ inputs.registry-url }} --username ${{ inputs.username }} --password-stdin
-      
-      sed -i 's/index.docker.io\/v1/index.docker.io\/v2/g' /kaniko/.docker/config.json
-
-      ./crane ls docker.io/tuananhorg/java_example
 
       [ -n "${{ inputs.context }}" ] && kargs="$kargs --context ${{ inputs.context }} "
       [ -n "${{ inputs.dockerfile }}" ] && kargs="$kargs --dockerfile ${{ inputs.dockerfile }} "
-      [ -n "${{ inputs.destination }}" ] && kargs="$kargs --destination ${{ inputs.destination }} "
       [ -n "${{ inputs.cache }}" ] && kargs="$kargs --cache "
       [ -n "${{ inputs.cleanup }}" ] && kargs="$kargs --cleanup "
       [ -n "${{ inputs.no-push }}" ] && kargs="$kargs --no-push "
@@ -148,5 +143,7 @@ runs:
       echo KANIKO FLAGS: $kargs
 
       /kaniko/executor $kargs
+
+      ./crane push image.tar ${{ inputs.destination }}
       
       echo EXIT CODE: $?
