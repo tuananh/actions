@@ -140,6 +140,7 @@ runs:
       [ -n "${{ inputs.dockerfile }}" ] && kargs="$kargs --dockerfile ${{ inputs.dockerfile }} "
       [ -n "${{ inputs.cache }}" ] && kargs="$kargs --cache "
       [ -n "${{ inputs.cleanup }}" ] && kargs="$kargs --cleanup "
+      [ -n "${{ inputs.destination }}" ] && kargs="$kargs --destination ${{ inputs.destination }}"
       [ -n "${{ inputs.no-push }}" ] && kargs="$kargs --no-push "
       [ -n "${{ inputs.tar-path }}" ] && kargs="$kargs --tarPath ${{ inputs.tar-path }}"
       [ -n "${{ inputs.reproducible }}" ] && kargs="$kargs --reproducible "
