@@ -69,5 +69,5 @@ jobs:
           registry-username: ${{ github.owner }}
           registry-password: ${{ secrets.GITHUB_TOKEN }}
           reproducible: true
-          destination: ghcr.io/tuananh/kaniko-build-test:${GITHUB_SHA::7}
+          destination: ghcr.io/${{ github.repository_owner }}/kaniko-build-test:${GITHUB_SHA::7}
           insecure: true
