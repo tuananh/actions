@@ -86,6 +86,10 @@ inputs:
   registry-password:
     description: registry password
     required: false
+
+  insecure:
+    description: insecure flag
+    required: false
   
 # outputs:
 #   digest:
@@ -144,12 +148,11 @@ runs:
       [ -n "${{ inputs.no-push }}" ] && kargs="$kargs --no-push "
       [ -n "${{ inputs.tar-path }}" ] && kargs="$kargs --tarPath ${{ inputs.tar-path }}"
       [ -n "${{ inputs.reproducible }}" ] && kargs="$kargs --reproducible "
+      [ -n "${{ inputs.insecure }}" ] && kargs="$kargs --insecure "
       [ -n "${{ inputs.force }}" ] && kargs="$kargs --force "
 
       echo KANIKO FLAGS: $kargs
 
       /kaniko/executor $kargs
-
-      ./crane push image.tar ${{ inputs.destination }}
       
       echo EXIT CODE: $?
