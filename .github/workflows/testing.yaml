@@ -50,6 +50,16 @@ jobs:
       - name: test tfdocs
         run: |
           terraform-docs --version
+          
+  setup-snyk:
+    name: setup-snyk test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: tuananh/actions/setup-snyk@main
+      - name: test snyk
+        run: |
+          snyk version
 
   kaniko-build-ghcr:
     name: kaniko-build test with GHCR
