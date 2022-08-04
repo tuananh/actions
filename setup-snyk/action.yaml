@@ -31,3 +31,4 @@ runs:
 
         curl -s -o snyk https://static.snyk.io/cli/${{ inputs.version }}/${SNYK_BINARY}
         chmod +x snyk
+        echo "$(pwd)" >> $GITHUB_PATH
