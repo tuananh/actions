@@ -5,6 +5,7 @@ A collection of my commonly used Github Actions.
 
 - `gen-key`: generate SSH key.
 - `setup-crane`: install `crane` CLI.
+- `setup-snyk`: install `snyk` CLI.
 - `setup-tfdocs`: install `terraform-docs` CLI.
 - `setup-tflint`: install `tflint` CLI.
 - `kaniko-build`: build OCI image with `kaniko`.
