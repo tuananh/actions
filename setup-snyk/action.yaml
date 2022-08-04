@@ -1,0 +1,33 @@
+# Copyright 2022 Tuan Anh Tran <me@tuananh.org>
+
+name: Setup snyk
+description: |
+  This action sets up snyk
+inputs:
+  version:
+    description: snyk version to install
+    required: false
+    default:  "v1.966.0"
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: Install snyk
+      shell: bash
+      run: |
+        set -ex
+        SNYK_BINARY="snyk-linux"
+        if [ "$RUNNER_OS" == "Linux" ]; then
+          SNYK_BINARY="snyk-linux"
+        elif [ "$RUNNER_OS" == "Windows" ]; then
+          SNYK_BINARY="snyk-win.exe"
+        elif [ "$RUNNER_OS" == "macOS" ]; then
+          SNYK_BINARY="snyk-macos"
+        else
+          echo "$RUNNER_OS not supported"
+          exit 1
+        fi
+
+        curl -s -o snyk https://static.snyk.io/cli/${{ inputs.version }}/${SNYK_BINARY}
+        chmod +x snyk
