@@ -80,4 +80,4 @@ jobs:
           registry-password: ${{ secrets.GITHUB_TOKEN }}
           reproducible: true
           destination: ghcr.io/${{ github.repository_owner }}/actions:${GITHUB_SHA::7}
-          insecure: true
+          # insecure: true
