@@ -34,8 +34,7 @@ runs:
 
           DOWNLOAD_URL=${BASE_URL}/${CLI_VERSION}/container-structure-test-${OS_ARCH}
           echo "Downloading container-structure-test using $DOWNLOAD_URL ..."
-          wget --no-check-certificate --quiet -O - $DOWNLOAD_URL
-          mv container-structure-test-${OS_ARCH} container-structure-test
+          wget --no-check-certificate --quiet -O container-structure-test - $DOWNLOAD_URL
           chmod +x container-structure-test
         }
 
