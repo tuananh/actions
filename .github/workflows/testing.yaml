@@ -69,7 +69,7 @@ jobs:
       - uses: tuananh/actions/setup-container-structure-test@main
       - name: test container-structure-test
         run: |
-          which container-structure-test
+          container-structure-test help
           container-structure-test version
 
   kaniko-build-ghcr:
