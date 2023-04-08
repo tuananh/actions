@@ -49,7 +49,7 @@ runs:
         echo "::set-output name=template::$TRIVY_TEMPLATE"
     - shell: bash
       run: |
-        echo ${{ steps.trivy-template.outputs.template }}
+        echo "${{ steps.trivy-template.outputs.template }}"
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
       with:
