@@ -25,4 +25,5 @@ runs:
     - name: Debug
       shell: bash
       run: |
+        sed 's/|,|/\n/g' trivy_scan_result.yaml
         cat trivy_scan_result.yaml

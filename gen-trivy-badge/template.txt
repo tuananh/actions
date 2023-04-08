@@ -18,7 +18,4 @@
         {{- end }}
     {{- end }}
 {{- end }}
-critical_cve_count: {{ $critical }}
-high_cve_count: {{ $high }}
-medium_cve_count: {{ $medium }}
-low_cve_count: {{ $low }}
+critical_cve_count: {{ $critical }},high_cve_count: {{ $high }},medium_cve_count: {{ $medium }},low_cve_count: {{ $low }}
