@@ -8,6 +8,10 @@ inputs:
     description: |
       image used for scanning
     required: true
+  badge-style:
+    description: |
+      badge style (flat, flat-square, plastic, social)
+    default: flat-square
 
 runs:
   using: "composite"
@@ -29,10 +33,10 @@ runs:
         cat trivy_scan_result.yaml
 
         output=""
-        output+="![critical cve](https://img.shields.io/static/v1?label=critical&message=$(yq -r '.critical_cve_count' trivy_scan_result.yaml)%20&style=flat&color=red)"
-        output+=" ![high cve](https://img.shields.io/static/v1?label=high&message=$(yq -r '.high_cve_count' trivy_scan_result.yaml)%20&style=flat&color=orange)"
-        output+=" ![medium cve](https://img.shields.io/static/v1?label=medium&message=$(yq -r '.medium_cve_count' trivy_scan_result.yaml)%20&style=flat&color=yellow)"
-        output+=" ![low cve](https://img.shields.io/static/v1?label=low&message=$(yq -r '.low_cve_count' trivy_scan_result.yaml)%20&style=flat&color=yellowgreen)"
+        output+="![critical cve](https://img.shields.io/static/v1?label=critical&message=$(yq -r '.critical_cve_count' trivy_scan_result.yaml)%20&style=${{inputs.badge-style}}&color=red)"
+        output+=" ![high cve](https://img.shields.io/static/v1?label=high&message=$(yq -r '.high_cve_count' trivy_scan_result.yaml)%20&style=${{inputs.badge-style}}&color=orange)"
+        output+=" ![medium cve](https://img.shields.io/static/v1?label=medium&message=$(yq -r '.medium_cve_count' trivy_scan_result.yaml)%20&style=${{inputs.badge-style}}&color=yellow)"
+        output+=" ![low cve](https://img.shields.io/static/v1?label=low&message=$(yq -r '.low_cve_count' trivy_scan_result.yaml)%20&style=${{inputs.badge-style}}&color=yellowgreen)"
 
         echo $output
 
