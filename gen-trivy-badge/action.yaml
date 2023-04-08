@@ -27,3 +27,12 @@ runs:
       run: |
         sed -i $'s/,/\\\n/g' trivy_scan_result.yaml
         cat trivy_scan_result.yaml
+
+        output=""
+        output+="![critical cve](https://img.shields.io/static/v1?label=critical&message=$(yq -r '.critical_cve_count' trivy_scan_result.yaml)%20&color=red)"
+        output+="![high cve](https://img.shields.io/static/v1?label=high&message=$(yq -r '.high_cve_count' trivy_scan_result.yaml)%20&color=orange)"
+        output+="![medium cve](https://img.shields.io/static/v1?label=medium&message=$(yq -r '.medium_cve_count' trivy_scan_result.yaml)%20&color=yellow)"
+        output+="![low cve](https://img.shields.io/static/v1?label=low&message=$(yq -r '.low_cve_count' trivy_scan_result.yaml)%20&color=yellowgreen)"
+
+        echo $output
+        

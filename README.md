@@ -1,6 +1,9 @@
 tuananh/actions
 ---------------
 
+<!-- TRIVY_BADGE_START -->
+<!-- TRIVY_BADGE_END -->
+
 A collection of my commonly used Github Actions.
 
 - `gen-key`: generate SSH key.
