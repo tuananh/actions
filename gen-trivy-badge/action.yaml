@@ -46,4 +46,4 @@ runs:
     - name: Debug
       shell: bash
       run: |
-        ls trivy_scan_result.yaml
+        cat trivy_scan_result.yaml
