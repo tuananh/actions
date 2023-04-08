@@ -22,7 +22,8 @@ runs:
         OUTPUT_TEMPLATE="${OUTPUT_TEMPLATE//$'\n'/'%0A'}"
         OUTPUT_TEMPLATE="${OUTPUT_TEMPLATE//$'\r'/'%0D'}"
         echo "template=$OUTPUT_TEMPLATE" >> $GITHUB_OUTPUT
-    - run: |
+    - shell: bash
+      run: |
         echo ${{ steps.trivy-template.outputs.template }}
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
