@@ -2,6 +2,7 @@ tuananh/actions
 ---------------
 
 <!-- TRIVY_BADGE_START -->
+![critical cve](https://img.shields.io/static/v1?label=critical&message=0%20&style=flat&color=red) ![high cve](https://img.shields.io/static/v1?label=high&message=1%20&style=flat&color=orange) ![medium cve](https://img.shields.io/static/v1?label=medium&message=2%20&style=flat&color=yellow) ![low cve](https://img.shields.io/static/v1?label=low&message=0%20&style=flat&color=yellowgreen)
 <!-- TRIVY_BADGE_END -->
 
 A collection of my commonly used Github Actions.
