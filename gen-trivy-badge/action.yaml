@@ -12,41 +12,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - id: trivy-template
-      shell: bash
-      run: |
-        TRIVY_TEMPLATE=$(cat << EOF
-        {{- $critical := 0 }}
-        {{- $high := 0 }}
-        {{- $medium := 0 }}
-        {{- $low := 0 }}
-        {{- range . }}
-            {{- range .Vulnerabilities }}
-                {{- if  eq .Severity "CRITICAL" }}
-                    {{- $critical = add $critical 1 }}
-                {{- end }}
-                {{- if  eq .Severity "HIGH" }}
-                    {{- $high = add $high 1 }}
-                {{- end }}
-                {{- if  eq .Severity "MEDIUM" }}
-                    {{- $medium = add $medium 1 }}
-                {{- end }}
-                {{- if  eq .Severity "LOW" }}
-                    {{- $low = add $low 1 }}
-                {{- end }}
-            {{- end }}
-        {{- end }}
-        critical_cve_count: {{ $critical }}
-        high_cve_count: {{ $high }}
-        medium_cve_count: {{ $medium }}
-        low_cve_count: {{ $low }}
-        EOF
-        )
-        TRIVY_TEMPLATE="${TRIVY_TEMPLATE//'%'/'%25'}"
-        TRIVY_TEMPLATE="${TRIVY_TEMPLATE//$'\n'/'%0A'}"
-        TRIVY_TEMPLATE="${TRIVY_TEMPLATE//$'\r'/'%0D'}"
-
-        echo "::set-output name=template::$TRIVY_TEMPLATE"
     - shell: bash
       run: |
         echo "${{ steps.trivy-template.outputs.template }}"
@@ -55,7 +20,7 @@ runs:
       with:
         image-ref: ${{ inputs.image }}
         format: 'template'
-        template: ${{ steps.trivy-template.outputs.template }}
+        template: '{{- $critical := 0 }} {{- $high := 0 }} {{- $medium := 0 }} {{- $low := 0 }} {{- range . }}     {{- range .Vulnerabilities }}         {{- if  eq .Severity "CRITICAL" }}             {{- $critical = add $critical 1 }}         {{- end }}         {{- if  eq .Severity "HIGH" }}             {{- $high = add $high 1 }}         {{- end }}         {{- if  eq .Severity "MEDIUM" }}             {{- $medium = add $medium 1 }}         {{- end }}         {{- if  eq .Severity "LOW" }}             {{- $low = add $low 1 }}         {{- end }}     {{- end }} {{- end }}critical_cve_count: {{ $critical }}high_cve_count: {{ $high }}medium_cve_count: {{ $medium }}low_cve_count: {{ $low }}'
         output: 'trivy_scan_result.yaml'
     - name: Debug
       shell: bash
