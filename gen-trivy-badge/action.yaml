@@ -13,7 +13,8 @@ runs:
   using: "composite"
   steps:
     - id: trivy-template
-      runs: |
+      shell: bash
+      run: |
         cat >./template.txt <<EOL
         {{- $critical := 0 }}
         {{- $high := 0 }}
