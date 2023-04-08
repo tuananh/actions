@@ -15,7 +15,7 @@ runs:
     - id: trivy-template
       shell: bash
       run: |
-        curl https://raw.githubusercontent.com/tuananh/actions/main/gen-trivy-badge/template.txt
+        wget https://raw.githubusercontent.com/tuananh/actions/main/gen-trivy-badge/template.txt
         echo "{template}={$(cat template.txt)}" >> $GITHUB_OUTPUT
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
