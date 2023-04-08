@@ -24,7 +24,7 @@ runs:
       run: |
         echo trivy image \
           --format template \
-          --template "$(cat template.txt)" \
+          --template "$(cat ./gen-trivy-badge/template.txt)" \
           --output trivy_scan_result.yaml \
           ${{ inputs.image }}
         
