@@ -14,33 +14,33 @@ runs:
   steps:
     - id: trivy-template
       runs: |
-      cat >./template.txt <<EOL
-      {{- $critical := 0 }}
-      {{- $high := 0 }}
-      {{- $medium := 0 }}
-      {{- $low := 0 }}
-      {{- range . }}
-          {{- range .Vulnerabilities }}
-              {{- if  eq .Severity "CRITICAL" }}
-                  {{- $critical = add $critical 1 }}
-              {{- end }}
-              {{- if  eq .Severity "HIGH" }}
-                  {{- $high = add $high 1 }}
-              {{- end }}
-              {{- if  eq .Severity "MEDIUM" }}
-                  {{- $medium = add $medium 1 }}
-              {{- end }}
-              {{- if  eq .Severity "LOW" }}
-                  {{- $low = add $low 1 }}
-              {{- end }}
-          {{- end }}
-      {{- end }}
-      critical_cve_count: {{ $critical }}
-      high_cve_count: {{ $high }}
-      medium_cve_count: {{ $medium }}
-      low_cve_count: {{ $low }}
-      EOL
-      echo "{template}={$(cat template.txt)}" >> $GITHUB_OUTPUT
+        cat >./template.txt <<EOL
+        {{- $critical := 0 }}
+        {{- $high := 0 }}
+        {{- $medium := 0 }}
+        {{- $low := 0 }}
+        {{- range . }}
+            {{- range .Vulnerabilities }}
+                {{- if  eq .Severity "CRITICAL" }}
+                    {{- $critical = add $critical 1 }}
+                {{- end }}
+                {{- if  eq .Severity "HIGH" }}
+                    {{- $high = add $high 1 }}
+                {{- end }}
+                {{- if  eq .Severity "MEDIUM" }}
+                    {{- $medium = add $medium 1 }}
+                {{- end }}
+                {{- if  eq .Severity "LOW" }}
+                    {{- $low = add $low 1 }}
+                {{- end }}
+            {{- end }}
+        {{- end }}
+        critical_cve_count: {{ $critical }}
+        high_cve_count: {{ $high }}
+        medium_cve_count: {{ $medium }}
+        low_cve_count: {{ $low }}
+        EOL
+        echo "{template}={$(cat template.txt)}" >> $GITHUB_OUTPUT
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
       with:
