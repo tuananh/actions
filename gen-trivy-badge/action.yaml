@@ -8,12 +8,34 @@ inputs:
     description: |
       image used for scanning
     required: true
-  
-# outputs:
-#   pub-key:
-#     description: |
-#       public key of the generated key
-#     value: ${{ steps.gen-key.outputs.pub-key }}
+  template:
+    description: |
+      template to be used
+    default: |
+      {{- $critical := 0 }}
+      {{- $high := 0 }}
+      {{- $medium := 0 }}
+      {{- $low := 0 }}
+      {{- range . }}
+          {{- range .Vulnerabilities }}
+              {{- if  eq .Severity "CRITICAL" }}
+                  {{- $critical = add $critical 1 }}
+              {{- end }}
+              {{- if  eq .Severity "HIGH" }}
+                  {{- $high = add $high 1 }}
+              {{- end }}
+              {{- if  eq .Severity "MEDIUM" }}
+                  {{- $medium = add $medium 1 }}
+              {{- end }}
+              {{- if  eq .Severity "LOW" }}
+                  {{- $low = add $low 1 }}
+              {{- end }}
+          {{- end }}
+      {{- end }}
+      critical_cve_count: {{ $critical }}
+      high_cve_count: {{ $high }}
+      medium_cve_count: {{ $medium }}
+      low_cve_count: {{ $low }}
 
 runs:
   using: "composite"
@@ -22,10 +44,9 @@ runs:
       id: trivy-scan
       shell: bash
       run: |
-        ls
         echo trivy image \
           --format template \
-          --template "$(cat ./gen-trivy-badge/template.txt)" \
+          --template "${{ inputs.template }}" \
           --output trivy_scan_result.yaml \
           ${{ inputs.image }}
         
