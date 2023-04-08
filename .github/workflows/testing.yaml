@@ -11,9 +11,18 @@ jobs:
     name: gen-trivy-badge test
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - uses: tuananh/actions/gen-trivy-badge@main
         with:
           image: golang:1.20-alpine
+      - name: Update README.md with Trivy badges
+        uses: EndBug/add-and-commit@v9
+        with:
+          committer_name: GitHub Actions
+          committer_email: 41898282+github-actions[bot]@users.noreply.github.com
+          fetch: false
+          message: Update README.md with Trivy badges
+          add: "README.md --force"
 
   # gen-key:
   #   name: gen-key test
