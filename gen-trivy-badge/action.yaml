@@ -16,15 +16,13 @@ runs:
       shell: bash
       run: |
         wget https://raw.githubusercontent.com/tuananh/actions/main/gen-trivy-badge/template.txt
-        cat template.txt
-        OUTPUT_TEMPLATE=$(cat template.txt)
-        OUTPUT_TEMPLATE="${OUTPUT_TEMPLATE//'%'/'%25'}"
-        OUTPUT_TEMPLATE="${OUTPUT_TEMPLATE//$'\n'/'%0A'}"
-        OUTPUT_TEMPLATE="${OUTPUT_TEMPLATE//$'\r'/'%0D'}"
-        echo "template=$OUTPUT_TEMPLATE" >> $GITHUB_OUTPUT
+        TRIVY_TEMPLATE=$(cat template.txt)
+        echo "TRIVY_TEMPLATE<<EOF" >> $GITHUB_ENV
+        echo "$TRIVY_TEMPLATE" >> $GITHUB_ENV
+        echo "EOF" >> $GITHUB_ENV
     - shell: bash
       run: |
-        echo ${{ steps.trivy-template.outputs.template }}
+        echo ${{ env.TRIVY_TEMPLATE }}
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
       with:
