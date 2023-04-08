@@ -14,13 +14,13 @@ runs:
   steps:
     - shell: bash
       run: |
-        echo "${{ steps.trivy-template.outputs.template }}"
+        wget https://raw.githubusercontent.com/tuananh/actions/main/gen-trivy-badge/template.txt
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
       with:
         image-ref: ${{ inputs.image }}
         format: 'template'
-        template: '{{- $critical := 0 }} {{- $high := 0 }} {{- $medium := 0 }} {{- $low := 0 }} {{- range . }}     {{- range .Vulnerabilities }}         {{- if  eq .Severity "CRITICAL" }}             {{- $critical = add $critical 1 }}         {{- end }}         {{- if  eq .Severity "HIGH" }}             {{- $high = add $high 1 }}         {{- end }}         {{- if  eq .Severity "MEDIUM" }}             {{- $medium = add $medium 1 }}         {{- end }}         {{- if  eq .Severity "LOW" }}             {{- $low = add $low 1 }}         {{- end }}     {{- end }} {{- end }}critical_cve_count: {{ $critical }}high_cve_count: {{ $high }}medium_cve_count: {{ $medium }}low_cve_count: {{ $low }}'
+        template: '@template.txt'
         output: 'trivy_scan_result.yaml'
     - name: Debug
       shell: bash
