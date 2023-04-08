@@ -1,0 +1,31 @@
+# Copyright 2022 Tuan Anh Tran <me@tuananh.org>
+
+name: gen-key
+description: |
+  This action generate Trivy scan result badge.
+inputs:
+  image:
+    description: |
+      image used for scanning
+    required: true
+  
+# outputs:
+#   pub-key:
+#     description: |
+#       public key of the generated key
+#     value: ${{ steps.gen-key.outputs.pub-key }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Trivy scan
+      id: trivy-scan
+      shell: bash
+      run: |
+        echo trivy image \
+          --format template \
+          --template "$(cat template.txt)" \
+          --output trivy_scan_result.yaml \
+          ${{ inputs.image }}
+        
+        echo cat trivy_scan_result.yaml

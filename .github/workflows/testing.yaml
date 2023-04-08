@@ -7,88 +7,96 @@ on:
 
 jobs:
 
-  gen-key:
-    name: gen-key test
+  gen-trivy-badge:
+    name: gen-trivy-badge test
     runs-on: ubuntu-latest
-
     steps:
-      - id: gen_key
-        uses: tuananh/actions/gen-key@main
+      - uses: tuananh/actions/gen-trivy-badge@main
         with:
-          email: ci@tuananh.org
-      - name: print pub key
-        run: |
-          echo ${{ steps.gen_key.outputs.pub-key }}
+          image: golang:1.20-alpine
+
+  # gen-key:
+  #   name: gen-key test
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - id: gen_key
+  #       uses: tuananh/actions/gen-key@main
+  #       with:
+  #         email: ci@tuananh.org
+  #     - name: print pub key
+  #       run: |
+  #         echo ${{ steps.gen_key.outputs.pub-key }}
   
-  setup-crane:
-    name: setup-crane test
-    runs-on: ubuntu-latest
+  # setup-crane:
+  #   name: setup-crane test
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - uses: tuananh/actions/setup-crane@main
-        with:
-          ref: main
-      - name: test crane
-        run: |
-          crane version
+  #   steps:
+  #     - uses: tuananh/actions/setup-crane@main
+  #       with:
+  #         ref: main
+  #     - name: test crane
+  #       run: |
+  #         crane version
 
-  setup-tflint:
-    name: setup-tflint test
-    runs-on: ubuntu-latest
+  # setup-tflint:
+  #   name: setup-tflint test
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - uses: tuananh/actions/setup-tflint@main
-      - name: test tflint
-        run: |
-          tflint --version
-  setup-tfdocs:
-    name: setup-tfdocs test
-    runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: tuananh/actions/setup-tflint@main
+  #     - name: test tflint
+  #       run: |
+  #         tflint --version
+  # setup-tfdocs:
+  #   name: setup-tfdocs test
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - uses: tuananh/actions/setup-tfdocs@main
-      - name: test tfdocs
-        run: |
-          terraform-docs --version
+  #   steps:
+  #     - uses: tuananh/actions/setup-tfdocs@main
+  #     - name: test tfdocs
+  #       run: |
+  #         terraform-docs --version
           
-  setup-snyk:
-    name: setup-snyk test
-    runs-on: ubuntu-latest
+  # setup-snyk:
+  #   name: setup-snyk test
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - uses: tuananh/actions/setup-snyk@main
-      - name: test snyk
-        run: |
-          snyk version
+  #   steps:
+  #     - uses: tuananh/actions/setup-snyk@main
+  #     - name: test snyk
+  #       run: |
+  #         snyk version
   
-  setup-container-structure-test:
-    name: setup-container-structure-test test
-    runs-on: ubuntu-latest
+  # setup-container-structure-test:
+  #   name: setup-container-structure-test test
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - uses: tuananh/actions/setup-container-structure-test@main
-      - name: test container-structure-test
-        run: |
-          container-structure-test help
-          container-structure-test version
+  #   steps:
+  #     - uses: tuananh/actions/setup-container-structure-test@main
+  #     - name: test container-structure-test
+  #       run: |
+  #         container-structure-test help
+  #         container-structure-test version
 
-  kaniko-build-ghcr:
-    name: kaniko-build test with GHCR
-    runs-on: ubuntu-latest
+  # kaniko-build-ghcr:
+  #   name: kaniko-build test with GHCR
+  #   runs-on: ubuntu-latest
 
-    # we need these permissions for testing kaniko-build (uploading to ghcr.io)
-    permissions:
-      packages: write
-      contents: read
+  #   # we need these permissions for testing kaniko-build (uploading to ghcr.io)
+  #   permissions:
+  #     packages: write
+  #     contents: read
 
-    steps:
-      - uses: actions/checkout@v3
-      - uses: tuananh/actions/kaniko-build@main
-        with:
-          dockerfile: ./kaniko-build/test.Dockerfile
-          registry-url: ghcr.io
-          registry-username: ${{ github.owner }}
-          registry-password: ${{ secrets.GITHUB_TOKEN }}
-          reproducible: true
-          destination: ghcr.io/${{ github.repository_owner }}/actions:${GITHUB_SHA::7}
-          # insecure: true
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: tuananh/actions/kaniko-build@main
+  #       with:
+  #         dockerfile: ./kaniko-build/test.Dockerfile
+  #         registry-url: ghcr.io
+  #         registry-username: ${{ github.owner }}
+  #         registry-password: ${{ secrets.GITHUB_TOKEN }}
+  #         reproducible: true
+  #         destination: ghcr.io/${{ github.repository_owner }}/actions:${GITHUB_SHA::7}
+  #         # insecure: true
