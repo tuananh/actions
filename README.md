@@ -12,6 +12,7 @@ A collection of my commonly used Github Actions.
 - `setup-snyk`: install `snyk` CLI.
 - `setup-tfdocs`: install `terraform-docs` CLI.
 - `setup-tflint`: install `tflint` CLI.
+- `setup-terrascan`: install `terrascan` CLI.
 - `kaniko-build`: build OCI image with `kaniko`.
 
 ## Usage

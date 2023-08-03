@@ -1,0 +1,37 @@
+name: Setup terrascan
+description: |
+  This action sets up terrascan: https://api.github.com/repos/tenable/terrascan/releases/latest
+inputs:
+  version:
+    description: Terrascan version
+    required: false
+    default: "1.18.2"
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: Install terrascan
+      shell: bash
+      run: |
+        function download_terrascan() {
+          TERRASCAN_VERSION=${{ inputs.version }}
+          TERRASCAN_BASE_URL="https://github.com/tenable/terrascan/releases/download/v${TERRASCAN_VERSION}"
+          case "$(echo $RUNNER_OS-$RUNNER_ARCH | awk '{print tolower($0)}')" in
+          linux-x64)    OS_ARCH=Linux_x86_64;;
+          macos-x64)  OS_ARCH=Darwin_x86_64;;
+          macos-arm64)  OS_ARCH=Darwin_arm64;;
+          *)
+            echo Unsupported RUNNER_ARCH \"$RUNNER_ARCH\" & RUNNER_OS \"$RUNNER_OS\"
+            exit -1
+            ;;
+          esac
+
+          TERRASCAN_URL=${TERRASCAN_BASE_URL}/terrascan_${TERRASCAN_VERSION}_${OS_ARCH}.tar.gz
+          echo $TERRASCAN_URL
+          wget --no-check-certificate --quiet -O - $TERRASCAN_URL | tar xzf - terrascan
+          install terrascan /usr/local/bin
+          terrascan version
+        }
+
+        download_terrascan
